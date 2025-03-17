@@ -1,0 +1,14 @@
+.pokemon-card {
+    transition: transform 0.2s, box-shadow 0.2s;
+    cursor: pointer;
+}
+
+.pokemon-card.selected {
+    transform: scale(1.05);
+    box-shadow: 0 0 15px rgba(59, 76, 202, 0.5);
+    border: 2px solid #3b4cca;
+}
+
+.pokemon-card:not(.selected):hover {
+    transform: scale(1.02);
+}

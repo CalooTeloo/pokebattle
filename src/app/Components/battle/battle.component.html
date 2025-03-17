@@ -1,0 +1,14 @@
+<div class="battle-container">
+    <h2>¡Batalla Pokémon!</h2>
+    <div *ngIf="battleState">
+        <app-battle-pokemon [pokemon]="battleState.enemy"></app-battle-pokemon>
+        <div class="battle-info">
+            <app-battle-log [log]="battleLog"></app-battle-log>
+            <app-move-selector [moves]="battleState.player.moves" [isPlayerTurn]="isPlayerTurn"
+                (moveSelected)="useMove($event)">
+            </app-move-selector>
+        </div>
+        <app-battle-pokemon [pokemon]="battleState.player"></app-battle-pokemon>
+    </div>
+    <button (click)="returnToSelection()">Regresar a selección</button>
+</div>
