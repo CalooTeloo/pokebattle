@@ -1,28 +1,14 @@
-export interface Move {
-    name: string;
-    power: number;
-    type: string;
-    pp: number;
-    maxPp: number;
-}
-
+// pokemon.model.ts
 export interface Pokemon {
-    id: number;
+  id: number;
+  name: string;
+  health: number;
+  maxHealth: number;
+  attack: number;
+  defense: number;
+  abilities: {
     name: string;
-    types: string[];
-    imageUrl: string;
-    selected?: boolean;
-    hp: number;
-    maxHp: number;
-    stats: {
-        attack: number;
-        defense: number;
-        speed: number;
-    };
-    moves: Move[];
-}
-
-export interface BattleState {
-    player: Pokemon;
-    enemy: Pokemon;
+    damage: number;
+  }[];
+  image: string;
 }

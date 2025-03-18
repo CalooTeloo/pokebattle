@@ -1,0 +1,152 @@
+/* Resetear márgenes y ocupar el 100% del viewport */
+html,
+body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+/* Contenedor principal con fondo y vista horizontal */
+.battle-container {
+  display: flex;
+  flex-direction: row;
+  /* Orientación horizontal para toda la vista */
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  /* Ocupa toda la altura de la pantalla */
+  background: url('/public/assets/fondo.jpg') no-repeat center center fixed;
+  /* Fondo desde assets */
+  background-size: cover;
+  padding: 20px;
+  color: #fff;
+}
+
+/* Sección del catálogo de Pokémon */
+.catalog {
+  width: 35%;
+  max-width: 300px;
+  margin-right: 20px;
+  overflow-y: auto;
+  height: 90vh;
+}
+
+.catalog h2 {
+  margin-bottom: 15px;
+}
+
+/* Grid de tarjetas para el catálogo */
+.pokemon-grid {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 15px;
+}
+
+.pokemon-card {
+  background: rgba(0, 0, 0, 0.6);
+  border-radius: 8px;
+  padding: 10px;
+  width: 100px;
+  cursor: pointer;
+  transition: transform 0.2s, background 0.2s;
+  text-align: center;
+}
+
+.pokemon-card.selected {
+  border: 2px solid #ffd700;
+  transform: scale(1.1);
+}
+
+.pokemon-card:hover {
+  background: rgba(0, 0, 0, 0.8);
+}
+
+.pokemon-card img {
+  width: 100%;
+  height: auto;
+}
+
+.selection-info {
+  margin-top: 15px;
+}
+
+/* Vista de batalla: se mantiene horizontal */
+.battle-view {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: center;
+  flex: 1;
+  height: 90vh;
+}
+
+/* Contenedor para cada Pokémon en batalla */
+.pokemon-container {
+  background: rgba(0, 0, 0, 0.6);
+  border-radius: 10px;
+  padding: 15px;
+  margin: 10px;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  max-width: 300px;
+}
+
+.pokemon-container img {
+  width: 100%;
+  max-width: 200px;
+  height: auto;
+}
+
+progress {
+  width: 100%;
+  height: 20px;
+  margin-bottom: 10px;
+  border-radius: 5px;
+}
+
+.abilities {
+  margin-top: 10px;
+}
+
+.abilities button {
+  margin: 5px;
+  padding: 8px 12px;
+  border: none;
+  background: #ffd700;
+  color: #000;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.abilities button:hover {
+  background: #ffc107;
+}
+
+.battle-message {
+  margin-top: 20px;
+  font-size: 1.2em;
+}
+
+/* Media queries para pantallas pequeñas */
+@media (max-width: 768px) {
+  .battle-container {
+    flex-direction: column;
+    /* En pantallas pequeñas se apila verticalmente */
+  }
+
+  .catalog {
+    width: 90%;
+    margin: 0 auto 20px;
+    max-width: none;
+    height: auto;
+  }
+
+  .battle-view {
+    flex-direction: column;
+    height: auto;
+  }
+}

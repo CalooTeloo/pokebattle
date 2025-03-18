@@ -1,14 +1,106 @@
+<!-- battle.component.html -->
 <div class="battle-container">
-    <h2>¡Batalla Pokémon!</h2>
-    <div *ngIf="battleState">
-        <app-battle-pokemon [pokemon]="battleState.enemy"></app-battle-pokemon>
-        <div class="battle-info">
-            <app-battle-log [log]="battleLog"></app-battle-log>
-            <app-move-selector [moves]="battleState.player.moves" [isPlayerTurn]="isPlayerTurn"
-                (moveSelected)="useMove($event)">
-            </app-move-selector>
+  <h1>¡Combate Pokémon!</h1>
+
+  <!-- Selección por Galería -->
+  <div *ngIf="!battleStarted" class="selection-container">
+    <div class="player-selection">
+      <h2>Jugador 1</h2>
+      <div class="pokemon-gallery">
+          <div *ngFor="let pokemon of pokemonList" class="pokemon-card"
+            [class.selected]="selectedPokemon1 === pokemon.name" (click)="selectPokemon(1, pokemon)">
+          <img [src]="pokemon.image" alt="{{ pokemon.name }}">
+          <p>{{ pokemon.name | titlecase }}</p>
+          <div class="preview-stats">
+            <span>HP: {{ pokemon.hp }}</span>
+            <span>Ataque: {{ pokemon.attack }}</span>
+            </div>
+          </div>
         </div>
-        <app-battle-pokemon [pokemon]="battleState.player"></app-battle-pokemon>
+      </div>
+
+    <div class="player-selection">
+      <h2>Jugador 2</h2>
+      <div class="pokemon-gallery">
+          <div *ngFor="let pokemon of pokemonList" class="pokemon-card"
+            [class.selected]="selectedPokemon2 === pokemon.name" (click)="selectPokemon(2, pokemon)">
+          <img [src]="pokemon.image" alt="{{ pokemon.name }}">
+          <p>{{ pokemon.name | titlecase }}</p>
+          <div class="preview-stats">
+            <span>HP: {{ pokemon.hp }}</span>
+            <span>Ataque: {{ pokemon.attack }}</span>
+          </div>
+        </div>
+      </div>
     </div>
-    <button (click)="returnToSelection()">Regresar a selección</button>
+
+    <button class="start-button" (click)="startBattle()" [disabled]="!selectedPokemon1 || !selectedPokemon2">
+      ¡Comenzar Batalla!
+    </button>
+  </div>
+
+  <!-- Área de Batalla -->
+  <div *ngIf="battleStarted" class="battle-area">
+    <app-notification [message]="notificationMessage"></app-notification>
+
+    <div class="combatants-container">
+      <div class="pokemon-battle" [class.active-turn]="currentAttacker === player1">
+        <div class="pokemon-info">
+            <h2>{{ player1.name | titlecase }}</h2>
+          <div class="stats">
+            <span>Lv. 50</span>
+            <span>HP: {{ player1.health }}/{{ player1.maxHealth }}</span>
+          </div>
+            <div class="health-bar">
+            <div class="health-fill" [style.width.%]="(player1.health / player1.maxHealth) * 100"></div>
+            </div>
+          <img [src]="player1.image" class="pokemon-sprite">
+          <div class="detailed-stats">
+            <p>Ataque: {{ player1.attack }}</p>
+            <p>Defensa: {{ player1.defense }}</p>
+          </div>
+        </div>
+
+        <div class="abilities">
+          <div *ngFor="let ability of player1.abilities" class="ability-card">
+            <button class="ability-button" (click)="useAbility(player1, player2, ability)"
+              [disabled]="currentAttacker !== player1 || isGameOver">
+              <span class="ability-name">{{ formatMoveName(ability.name) }}</span>
+              <span class="ability-power">{{ ability.damage }}</span>
+          </button>
+        </div>
+      </div>
+      </div>
+
+      <div class="vs">VS</div>
+
+      <div class="pokemon-battle" [class.active-turn]="currentAttacker === player2">
+        <div class="pokemon-info">
+            <h2>{{ player2.name | titlecase }}</h2>
+          <div class="stats">
+            <span>Lv. 50</span>
+            <span>HP: {{ player2.health }}/{{ player2.maxHealth }}</span>
+          </div>
+            <div class="health-bar">
+            <div class="health-fill" [style.width.%]="(player2.health / player2.maxHealth) * 100"></div>
+            </div>
+          <img [src]="player2.image" class="pokemon-sprite">
+          <div class="detailed-stats">
+            <p>Ataque: {{ player2.attack }}</p>
+            <p>Defensa: {{ player2.defense }}</p>
+          </div>
+        </div>
+
+        <div class="abilities">
+          <div *ngFor="let ability of player2.abilities" class="ability-card">
+            <button class="ability-button" (click)="useAbility(player2, player1, ability)"
+              [disabled]="currentAttacker !== player2 || isGameOver">
+              <span class="ability-name">{{ formatMoveName(ability.name) }}</span>
+              <span class="ability-power">{{ ability.damage }}</span>
+          </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>

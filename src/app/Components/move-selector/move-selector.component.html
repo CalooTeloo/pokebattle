@@ -1,7 +1,0 @@
-<div class="move-grid">
-    <button *ngFor="let move of moves" class="move-button" (click)="selectMove(move)"
-        [disabled]="!isPlayerTurn || move.pp <= 0">
-        <span class="move-name">{{ move.name | titlecase }}</span>
-        <span class="move-details">PP: {{ move.pp }}/{{ move.maxPp }}</span>
-    </button>
-</div>
