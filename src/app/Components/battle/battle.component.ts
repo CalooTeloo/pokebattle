@@ -11,7 +11,7 @@ import { NotificationComponent } from '../notification/notification.component';
   selector: 'app-battle',
   imports: [FormsModule, CommonModule, NgIf, NgFor, NotificationComponent, TitleCasePipe],
   templateUrl: './battle.component.html',
-  styleUrls: ['./battle.component.css']
+  styleUrls: ['./battle.component.scss']
 })
 export class BattleComponent implements OnInit {
   pokemonList: any[] = [];
